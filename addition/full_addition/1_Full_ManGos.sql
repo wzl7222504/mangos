@@ -40,3 +40,8 @@ INSERT INTO `spell_proc_event` VALUES
 (44543,0,3,33555104,0,0,0,0,0,7,0),
 (44545,0,3,33555104,0,0,0,0,0,15,0);
 
+-- 15_ManGos_String_ManGos
+
+DELETE FROM `mangos_string` WHERE `entry` = 11000;
+INSERT INTO `mangos_string` VALUES (11000, '|cffff0000[Anticheat]: Cheater detected. Nickname: %s. Cheat type: %s.|r', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '|cffff0000[???????]: ????? ?????????. ???: %s. ??? ????: %s.|r');
+
