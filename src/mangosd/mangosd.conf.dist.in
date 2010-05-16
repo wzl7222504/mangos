@@ -1618,6 +1618,7 @@ SOAP.Port = 7878
 #    Anticheat.Movement.DetectMountainHack
 #        Turn Speed Check on/off
 #        Default: 1 (on)
+#
 #    Anticheat.Movement.DetectAirJumpHack
 #        Turn Air/Graviti Jump Check on/off
 #        Default: 1 (on)
