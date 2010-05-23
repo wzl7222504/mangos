@@ -1,7 +1,7 @@
 #####################################
 # MaNGOS Configuration file         #
 #####################################
-ConfVersion=2010040601
+ConfVersion=2010051901
 
 ###################################################################################################################
 # CONNECTIONS AND DIRECTORIES
@@ -255,6 +255,9 @@ CleanCharacterDB = 1
 #    LogFilter_SQLText
 #    LogFilter_AIAndMovegens
 #    LogFilter_PlayerStats
+#    LogFilter_Damage
+#    LogFilter_Combat
+#    LogFilter_SpellCast
 #        Log filters (disabled by default, mostly debug only output affected cases)
 #        Default: 0 - include in log if log level permit
 #                 1 - not include with any log level
@@ -747,8 +750,8 @@ Motd = "Welcome to the Massive Network Game Object Server."
 #
 #    AllowTwoSide.Accounts
 #        Allow or not accounts to create characters in the 2 teams in any game type.
-#        Default: 0 (Not allowed)
-#                 1 (Allowed)
+#                 0 (Not allowed)
+#        Default: 1 (Allowed)
 #
 #    AllowTwoSide.Interaction.Chat
 #    AllowTwoSide.Interaction.Channel
@@ -779,7 +782,7 @@ Motd = "Welcome to the Massive Network Game Object Server."
 #
 ###################################################################################################################
 
-AllowTwoSide.Accounts = 0
+AllowTwoSide.Accounts = 1
 AllowTwoSide.Interaction.Chat = 0
 AllowTwoSide.Interaction.Channel = 0
 AllowTwoSide.Interaction.Group = 0
@@ -789,6 +792,29 @@ AllowTwoSide.Interaction.Mail = 0
 AllowTwoSide.WhoList = 0
 AllowTwoSide.AddFriend = 0
 TalentsInspecting = 1
+
+###################################################################################################################
+# AUTO BROADCAST
+#
+#    AutoBroadcast.On
+#        Enable auto broadcast
+#        Default: 0 - off
+#                 1 - on
+#
+#    AutoBroadcast.Center
+#        Display method
+#        Default: 0 - announce
+#                 1 - notify
+#                 2 - both
+#
+#    AutoBroadcast.Timer
+#        Timer for auto broadcast
+#
+###################################################################################################################
+
+AutoBroadcast.On = 0
+AutoBroadcast.Center = 0
+AutoBroadcast.Timer = 30000
 
 ###################################################################################################################
 # CREATURE SETTINGS
@@ -825,6 +851,11 @@ TalentsInspecting = 1
 #    WorldBossLevelDiff
 #        Difference for boss dynamic level with target
 #        Default: 3
+#
+#    Corpse.EmptyLootShow
+#        If target can have loot (or can be skining after loot) but no loot generated still show loot window
+#        Default: 1 (show)
+#                 0 (not show)
 #
 #    Corpse.Decay.NORMAL
 #    Corpse.Decay.RARE
@@ -883,6 +914,7 @@ CreatureFamilyAssistanceRadius = 10
 CreatureFamilyAssistanceDelay = 1500
 CreatureFamilyFleeDelay = 7000
 WorldBossLevelDiff = 3
+Corpse.EmptyLootShow = 1
 Corpse.Decay.NORMAL = 60
 Corpse.Decay.RARE = 300
 Corpse.Decay.ELITE = 300
@@ -1412,6 +1444,77 @@ Network.TcpNodelay = 1
 Network.KickOnBadPacket = 0
 
 ###################################################################################################################
+# AUCTION HOUSE BOT SETTINGS
+#
+#    AuctionHouseBot.Seller.Enabled
+#        Enable/Disable the part of AHBot that puts items up for auction
+#    Default 0 (disabled)
+#
+#    AuctionHouseBot.Buyer.Enabled
+#        Enable/Disable the part of AHBot that buys items from players
+#    Default 0 (disabled)
+#
+#    AuctionHouseBot.Account
+#        Is the account number (in realmd->account table) of the player you want to run as the auction bot.
+#    Default: 0 (Auction House Bot disabled)
+#
+#    AuctionHouseBot.Character
+#        Is the GUID (in characters->characters table) of the player you want to run as the auction bot.
+#    Default: 0 (Auction House Bot disabled)
+#
+#    AuctionHouseBot.Items.Vendor
+#        Include items that can be bought from vendors.
+#    Default 0
+#
+#    AuctionHouseBot.Items.Loot
+#        Include items that can be looted or fished for.
+#    Default 1
+#
+#    AuctionHouseBot.Items.Misc
+#        Include misc. items.
+#    Default 0
+#
+#    AuctionHouseBot.Bind.*
+#        Indicates which bonding types to allow the bot to put up for auction
+#            No     - Items that don't bind            Default 1 (Allowed)
+#            Pickup - Items that bind on pickup        Default 0 (Not Allowed)
+#            Equip  - Items that bind on equip         Default 1 (Allowed)
+#            Use    - Items that bind on use           Default 1 (Allowed)
+#            Quest  - Quest Items                      Default 0 (Not Allowed)
+#
+#    AuctionHouseBot.ItemsPerCycle
+#        Number of Items to Add/Remove from the AH during mass operations
+#    Default 200
+#
+#    AuctionHouseBot.BuyPrice.Seller
+#        Should the Seller use BuyPrice or SellPrice to determine Bid Prices
+#    Default 0 (use SellPrice)
+#
+#    AuctionHouseBot.BuyPrice.Buyer
+#        Should the Buyer use BuyPrice or SellPrice to determine Bid Prices
+#    Default 0 (use SellPrice)
+#
+#    All other settings have been moved to sql
+#
+###################################################################################################################
+
+AuctionHouseBot.Seller.Enabled = 0
+AuctionHouseBot.Buyer.Enabled = 0
+AuctionHouseBot.Account = 0
+AuctionHouseBot.Character = 0
+AuctionHouseBot.Items.Vendor = 0
+AuctionHouseBot.Items.Loot = 1
+AuctionHouseBot.Items.Misc = 0
+AuctionHouseBot.Bind.No = 1
+AuctionHouseBot.Bind.Pickup = 0
+AuctionHouseBot.Bind.Equip = 1
+AuctionHouseBot.Bind.Use = 1
+AuctionHouseBot.Bind.Quest = 0
+AuctionHouseBot.ItemsPerCycle = 200
+AuctionHouseBot.BuyPrice.Seller = 0
+AuctionHouseBot.BuyPrice.Buyer = 0
+
+###################################################################################################################
 # CONSOLE, REMOTE ACCESS AND SOAP
 #
 #    Console.Enable
@@ -1472,6 +1575,107 @@ Ra.Stricted = 1
 SOAP.Enabled = 0
 SOAP.IP = 127.0.0.1
 SOAP.Port = 7878
+
+###################################################################################################################
+# MOVEMENT ANTICHEAT
+#
+#    Anticheat.Movement.Enable
+#        Enable Movement Anticheat
+#        Default: 0 - off
+#                 1 - on
+#
+#    Anticheat.Movement.AlarmCount
+#        Count alarms. After AlarmCount is exceeded, actions are taken against the player. (default 5)
+#
+#    Anticheat.Movement.AlarmTime
+#        Reset alarm-count after this milliseconds. (default 5000)
+#
+#    Anticheat.Movement.Kill
+#        Enable Kill cheater
+#        Default: 0 - off
+#                 1 - on
+#
+#    Anticheat.Movement.Kick
+#        Enable Kick cheater
+#        Default: 0 - off
+#                 1 - on
+#
+#    Anticheat.Movement.BanType
+#        Enable Ban cheater
+#        Default: 0 - off
+#                 1 - Ban Account
+#                 2 - Ban IP
+#                 3 - Ban Account + IP
+#
+#    Anticheat.Movement.Announce
+#        Enable Announce cheater
+#        Default: 0 - off
+#                 1 - on
+#
+#    Anticheat.Movement.DetectSpeedHack
+#        Turn Speed Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectWaterWalk
+#        Turn WaterWalk Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectFlyHack
+#        Turn Fly Hack Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectMountainHack
+#        Turn Speed Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectAirJumpHack
+#        Turn Air/Graviti Jump Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectTeleportHack
+#        Turn Teleport Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.DetectTeleport2PlaneHack
+#        Turn Teleport2Plane Check on/off
+#        Default: 1 (on)
+#
+#    Anticheat.Movement.BanTime
+#        How long the ban should last.
+#        Default: 1 Minute - 1m
+#
+#    Anticheat.Movement.MaxXYT
+#        Max units a player is allowed to travel per millisecond.
+#        Default: 0.04 (This is ~400% Speed, 0.007 is walk-speed, 310% is 0.0287)
+#
+#    Anticheat.Movement.IgnoreSecAfterTeleport
+#        After being teleported this number of seconds no cheat is reported.
+#        Default: 10 seconds - 10
+#
+#    Anticheat.Movement.GmLevel
+#        Only accounts that are below this gm-level or exact at the same, are reported for cheating.
+#        Default: Only normal Players - 0
+#
+###################################################################################################################
+
+Anticheat.Movement.Enable = 1
+Anticheat.Movement.AlarmCount = 5
+Anticheat.Movement.AlarmTime = 5000
+Anticheat.Movement.Kill = 0
+Anticheat.Movement.Kick = 0
+Anticheat.Movement.Announce = 0
+Anticheat.Movement.DetectSpeedHack = 1
+Anticheat.Movement.DetectWaterWalk = 1
+Anticheat.Movement.DetectFlyHack = 1
+Anticheat.Movement.DetectMountainHack = 1
+Anticheat.Movement.DetectAirJumpHack = 1
+Anticheat.Movement.DetectTeleportHack = 1
+Anticheat.Movement.DetectTeleport2PlaneHack = 0
+Anticheat.Movement.BanType = 0
+Anticheat.Movement.BanTime = "1m"
+Anticheat.Movement.MaxXYT = 0.04
+Anticheat.Movement.IgnoreSecAfterTeleport = 10
+Anticheat.Movement.GmLevel = 0
 
 ###################################################################################################################
 #    CharDelete.Method

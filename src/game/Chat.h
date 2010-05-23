@@ -108,6 +108,7 @@ class ChatHandler
         bool HandleAccountSetAddonCommand(const char* args);
         bool HandleAccountSetGmLevelCommand(const char* args);
         bool HandleAccountSetPasswordCommand(const char* args);
+        bool HandleAHBotOptionsCommand(const char* args);
 
         bool HandleBanAccountCommand(const char* args);
         bool HandleBanCharacterCommand(const char* args);
@@ -405,6 +406,7 @@ class ChatHandler
         bool HandleReloadSpellTargetPositionCommand(const char* args);
         bool HandleReloadSpellThreatsCommand(const char* args);
         bool HandleReloadSpellPetAurasCommand(const char* args);
+        bool HandleReloadSpellDisabledCommand(const char* args);
 
         bool HandleResetAchievementsCommand(const char * args);
         bool HandleResetAllCommand(const char * args);
@@ -425,10 +427,11 @@ class ChatHandler
         bool HandleServerIdleRestartCommand(const char* args);
         bool HandleServerIdleShutDownCommand(const char* args);
         bool HandleServerInfoCommand(const char* args);
+        bool HandleServerLogFilterCommand(const char* args);
+        bool HandleServerLogLevelCommand(const char* args);
         bool HandleServerMotdCommand(const char* args);
         bool HandleServerPLimitCommand(const char* args);
         bool HandleServerRestartCommand(const char* args);
-        bool HandleServerSetLogLevelCommand(const char* args);
         bool HandleServerSetMotdCommand(const char* args);
         bool HandleServerShutDownCommand(const char* args);
         bool HandleServerShutDownCancelCommand(const char* args);
@@ -465,6 +468,7 @@ class ChatHandler
         bool HandleGroupgoCommand(const char* args);
         bool HandleRecallCommand(const char* args);
         bool HandleAnnounceCommand(const char* args);
+		bool HandleNameAnnounceCommand(const char* args);
         bool HandleNotifyCommand(const char* args);
         bool HandleGPSCommand(const char* args);
         bool HandleTaxiCheatCommand(const char* args);

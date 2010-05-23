@@ -78,7 +78,8 @@ enum WorldTimers
     WUPDATE_CORPSES     = 5,
     WUPDATE_EVENTS      = 6,
     WUPDATE_DELETECHARS = 7,
-    WUPDATE_COUNT       = 8
+	WUPDATE_AUTOBROADCAST = 8,
+    WUPDATE_COUNT       = 9
 };
 
 /// Configuration elements
@@ -177,6 +178,14 @@ enum eConfigUInt32Values
     CONFIG_UINT32_TIMERBAR_BREATH_MAX,
     CONFIG_UINT32_TIMERBAR_FIRE_GMLEVEL,
     CONFIG_UINT32_TIMERBAR_FIRE_MAX,
+
+    /* Start AHBot */
+    CONFIG_UINT32_AHBOT_ACCOUNT_ID,
+    CONFIG_UINT32_AHBOT_CHARACTER_ID,
+
+    CONFIG_UINT32_AHBOT_ITEMS_CYCLE,
+    /* End AHBot*/
+
     CONFIG_UINT32_MIN_LEVEL_STAT_SAVE,
     CONFIG_UINT32_CHARDELETE_KEEP_DAYS,
     CONFIG_UINT32_CHARDELETE_METHOD,
@@ -297,6 +306,7 @@ enum eConfigBoolValues
     CONFIG_BOOL_CHAT_STRICT_LINK_CHECKING_SEVERITY,
     CONFIG_BOOL_CHAT_STRICT_LINK_CHECKING_KICK,
     CONFIG_BOOL_ADDON_CHANNEL,
+    CONFIG_BOOL_CORPSE_EMPTY_LOOT_SHOW,
     CONFIG_BOOL_DEATH_CORPSE_RECLAIM_DELAY_PVP,
     CONFIG_BOOL_DEATH_CORPSE_RECLAIM_DELAY_PVE,
     CONFIG_BOOL_DEATH_BONES_WORLD,
@@ -310,6 +320,25 @@ enum eConfigBoolValues
     CONFIG_BOOL_ARENA_QUEUE_ANNOUNCER_JOIN,
     CONFIG_BOOL_ARENA_QUEUE_ANNOUNCER_EXIT,
     CONFIG_BOOL_KICK_PLAYER_ON_BAD_PACKET,
+
+    /* Start AHBot */
+    CONFIG_BOOL_AHBOT_SELLER_ENABLED,
+    CONFIG_BOOL_AHBOT_BUYER_ENABLED,
+
+    CONFIG_BOOL_AHBOT_ITEMS_VENDOR,
+    CONFIG_BOOL_AHBOT_ITEMS_LOOT,
+    CONFIG_BOOL_AHBOT_ITEMS_MISC,
+
+    CONFIG_BOOL_AHBOT_BIND_NO,
+    CONFIG_BOOL_AHBOT_BIND_PICKUP,
+    CONFIG_BOOL_AHBOT_BIND_EQUIP,
+    CONFIG_BOOL_AHBOT_BIND_USE,
+    CONFIG_BOOL_AHBOT_BIND_QUEST,
+
+    CONFIG_BOOL_AHBOT_BUYPRICE_SELLER,
+    CONFIG_BOOL_AHBOT_BUYPRICE_BUYER,
+    /* End AHBot*/
+
     CONFIG_BOOL_STATS_SAVE_ONLY_ON_LOGOUT,
     CONFIG_BOOL_CLEAN_CHARACTER_DB,
     CONFIG_BOOL_VALUE_COUNT
@@ -445,6 +474,7 @@ class World
 
         WorldSession* FindSession(uint32 id) const;
         void AddSession(WorldSession *s);
+        void SendBroadcast();
         bool RemoveSession(uint32 id);
         /// Get the number of current active sessions
         void UpdateMaxSessionCounters();
@@ -574,6 +604,28 @@ class World
         static float GetVisibleUnitGreyDistance()           { return m_VisibleUnitGreyDistance;       }
         static float GetVisibleObjectGreyDistance()         { return m_VisibleObjectGreyDistance;     }
 
+        // Movement AntiCheat enable flag
+        inline bool GetMvAnticheatEnable()             {return m_MvAnticheatEnable;}
+        inline bool GetMvAnticheatKick()               {return m_MvAnticheatKick;}
+        inline bool GetMvAnticheatAnnounce()           {return m_MvAnticheatAnnounce;}
+        inline uint32 GetMvAnticheatAlarmCount()       {return m_MvAnticheatAlarmCount;}
+        inline uint32 GetMvAnticheatAlarmPeriod()      {return m_MvAnticheatAlarmPeriod;}
+        inline unsigned char GetMvAnticheatBan()       {return m_MvAntiCheatBan;}
+        inline std::string GetMvAnticheatBanTime()     {return m_MvAnticheatBanTime;}
+        inline unsigned char GetMvAnticheatGmLevel()   {return m_MvAnticheatGmLevel;}
+        inline bool GetMvAnticheatKill()               {return m_MvAnticheatKill;}
+        inline float GetMvAnticheatMaxXYT()            {return m_MvAnticheatMaxXYT;}
+        inline uint16 GetMvAnticheatIgnoreAfterTeleport()   {return m_MvAnticheatIgnoreAfterTeleport;}
+
+        inline bool GetMvAnticheatSpeedCheck()         {return m_MvAnticheatSpeedCheck;}
+        inline bool GetMvAnticheatWaterCheck()         {return m_MvAnticheatWaterCheck;}
+        inline bool GetMvAnticheatFlyCheck()           {return m_MvAnticheatFlyCheck;}
+        inline bool GetMvAnticheatMountainCheck()      {return m_MvAnticheatMountainCheck;}
+        inline bool GetMvAnticheatJumpCheck()          {return m_MvAnticheatJumpCheck;}
+        inline bool GetMvAnticheatTeleportCheck()      {return m_MvAnticheatTeleportCheck;}
+        inline bool GetMvAnticheatTeleport2PlaneCheck()  {return m_MvAnticheatTeleport2PlaneCheck;}
+
+
         void ProcessCliCommands();
         void QueueCliCommand(CliCommandHolder* commandHolder) { cliCmdQueue.add(commandHolder); }
 
@@ -664,6 +716,26 @@ class World
         static float m_MaxVisibleDistanceInFlight;
         static float m_VisibleUnitGreyDistance;
         static float m_VisibleObjectGreyDistance;
+
+        //movement anticheat enable flag
+        bool m_MvAnticheatEnable;
+        bool m_MvAnticheatKick;
+        bool m_MvAnticheatAnnounce;
+        uint32 m_MvAnticheatAlarmCount;
+        uint32 m_MvAnticheatAlarmPeriod;
+        unsigned char m_MvAntiCheatBan;
+        std::string m_MvAnticheatBanTime;
+        unsigned char m_MvAnticheatGmLevel;
+        bool m_MvAnticheatKill;
+        float m_MvAnticheatMaxXYT;
+        uint16 m_MvAnticheatIgnoreAfterTeleport;
+        bool m_MvAnticheatSpeedCheck;
+        bool m_MvAnticheatWaterCheck;
+        bool m_MvAnticheatFlyCheck;
+        bool m_MvAnticheatMountainCheck;
+        bool m_MvAnticheatJumpCheck;
+        bool m_MvAnticheatTeleportCheck;
+        bool m_MvAnticheatTeleport2PlaneCheck;
 
         // CLI command holder to be thread safe
         ACE_Based::LockedQueue<CliCommandHolder*,ACE_Thread_Mutex> cliCmdQueue;
