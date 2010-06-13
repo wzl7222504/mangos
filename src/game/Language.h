@@ -86,7 +86,11 @@ enum MangosStrings
     //LANG_RA_BUSY                      = 60, not used
     LANG_RA_USER                        = 61,
     LANG_RA_PASS                        = 62,
-    // Room for more level 0              63-99 not used
+    // Name Announce
+    LANG_SYSTEMMESSAGE_MODERATOR        = 63,
+    LANG_SYSTEMMESSAGE_GAMEMASTER       = 64,
+    LANG_SYSTEMMESSAGE_ADMINISTRATOR    = 65,
+    // Room for more level 0              66-99 not used
 
     // level 1 chat
     LANG_GLOBAL_NOTIFY                  = 100,
@@ -849,10 +853,14 @@ enum MangosStrings
 
     // FREE IDS                           1300-9999
 
+    // Broadcaster
+    LANG_AUTO_BROADCAST                 = 1300,
+
     // Use for not-in-offcial-sources patches
     //                                    10000-10999
 
     // Use for custom patches             11000-11999
+	LANG_ANNOUNCE_CHEAT                 = 11000,
 
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)

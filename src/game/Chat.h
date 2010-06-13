@@ -32,7 +32,7 @@ class ChatCommand
 {
     public:
         const char *       Name;
-        uint32             SecurityLevel;                   // function pointer required correct align (use uint32)
+        uint32             SecurityLevel;                  // function pointer required correct align (use uint32)
         bool               AllowConsole;
         bool (ChatHandler::*Handler)(const char* args);
         std::string        Help;
@@ -108,6 +108,7 @@ class ChatHandler
         bool HandleAccountSetAddonCommand(const char* args);
         bool HandleAccountSetGmLevelCommand(const char* args);
         bool HandleAccountSetPasswordCommand(const char* args);
+        bool HandleAHBotOptionsCommand(const char* args);
 
         bool HandleBanAccountCommand(const char* args);
         bool HandleBanCharacterCommand(const char* args);
@@ -405,6 +406,7 @@ class ChatHandler
         bool HandleReloadSpellTargetPositionCommand(const char* args);
         bool HandleReloadSpellThreatsCommand(const char* args);
         bool HandleReloadSpellPetAurasCommand(const char* args);
+        bool HandleReloadSpellDisabledCommand(const char* args);
 
         bool HandleResetAchievementsCommand(const char * args);
         bool HandleResetAllCommand(const char * args);
@@ -466,6 +468,7 @@ class ChatHandler
         bool HandleGroupgoCommand(const char* args);
         bool HandleRecallCommand(const char* args);
         bool HandleAnnounceCommand(const char* args);
+		bool HandleNameAnnounceCommand(const char* args);
         bool HandleNotifyCommand(const char* args);
         bool HandleGPSCommand(const char* args);
         bool HandleTaxiCheatCommand(const char* args);
@@ -516,6 +519,7 @@ class ChatHandler
         bool HandleFlushArenaPointsCommand(const char *args);
         bool HandleRepairitemsCommand(const char* args);
         bool HandleWaterwalkCommand(const char* args);
+        bool HandlePlayerbotCommand(const char* args);
         bool HandleQuitCommand(const char* args);
 
         //! Development Commands
